@@ -5,7 +5,7 @@ import ProductSubCategory from "App/Models/ProductSubCategory";
 
 export default class ProductsController {
   public async index(
-    { request, response }: HttpContextContract
+    {  response }: HttpContextContract
   ) {
     try {
       // const products = await Product.query().preload("user")
@@ -22,7 +22,7 @@ export default class ProductsController {
     }
   }
 
-  public async show({ request, response, params }: HttpContextContract) {
+  public async show({ response, params }: HttpContextContract) {
     try {
       const product = await Product.find(params.id);
       if (product) {
@@ -40,12 +40,12 @@ export default class ProductsController {
   }
 
   public async update({
-    auth,
+    // auth,
     request,
     response,
     params,
   }: HttpContextContract) {
-    const user = await auth.authenticate();
+    // const user = await auth.authenticate();
     const product = await Product.find(params.id);
 
     if (product) {
@@ -103,8 +103,8 @@ export default class ProductsController {
       
 
       let userProduct = await user.related("product").save(product);
-      let categoryProduct = await productCategory.related("product").save(product);
-      let subCategoryProduct = await productSubCategory.related("product").save(product);
+      await productCategory.related("product").save(product);
+      await productSubCategory.related("product").save(product);
 
 
       // let ResolvedSave = await Promise.allSettled([userProduct, categoryProduct, subCategoryProduct])
@@ -119,9 +119,9 @@ export default class ProductsController {
     }
   }
 
-  public async destroy({ response, auth, params }: HttpContextContract) {
+  public async destroy({ response, params }: HttpContextContract) {
     try {
-      const user = await auth.authenticate();
+      // const user = await auth.authenticate();
       const product = await Product.query()
         .where("id", params.id)
           .delete();
