@@ -24,8 +24,8 @@ const databaseConfig: DatabaseConfig & { orm: Partial<OrmConfig> } = {
   | file.
   |
   */
- 
-  connection: Env.get('DB_CONNECTION'),
+
+  connection: Env.get("DB_CONNECTION"),
 
   connections: {
     /*
@@ -40,19 +40,26 @@ const databaseConfig: DatabaseConfig & { orm: Partial<OrmConfig> } = {
     |
     */
     pg: {
-      client: 'pg',
+      client: "pg",
       connection: {
-        host: Env.get('PG_HOST') || host,
-        port: Env.get('PG_PORT') || port,
-        user: Env.get('PG_USER') || user,
-        password: Env.get('PG_PASSWORD', '') || password,
-        database: Env.get('PG_DB_NAME') || database,
+        host: Env.get("PG_HOST", host) || host,
+        port: Env.get("PG_PORT", port) || port,
+        user: Env.get("PG_USER", user) || user,
+        password: Env.get("PG_PASSWORD", password),
+        database: Env.get("PG_DB_NAME", database),
       },
       healthCheck: false,
-			debug: false,
+      debug: false,
     },
-
   },
+
+  // connection: {
+  //   host: Env.get("PG_HOST"),
+  //   port: Env.get("PG_PORT"),
+  //   user: Env.get("PG_USER"),
+  //   password: Env.get("PG_PASSWORD", ""),
+  //   database: Env.get("PG_DB_NAME"),
+  // },
 
   /*
   |--------------------------------------------------------------------------
@@ -66,8 +73,7 @@ const databaseConfig: DatabaseConfig & { orm: Partial<OrmConfig> } = {
   | - Or define a custom function to compute the primary key for a given model.
   |
   */
-  orm: {
-  },
-}
+  orm: {},
+};
 
 export default databaseConfig
