@@ -3,7 +3,7 @@ import ProductCategory from "App/Models/ProductCategory";
 import ProductSubCategory from "App/Models/ProductSubCategory";
 
 export default class ProductSubCategoriesController {
-  public async index({ request, response }: HttpContextContract) {
+  public async index({ response }: HttpContextContract) {
     try {
       const productSubCategory = await ProductSubCategory.query().preload(
         "productCategory"
@@ -17,7 +17,7 @@ export default class ProductSubCategoriesController {
     }
   }
 
-  public async show({ request, response, params }: HttpContextContract) {
+  public async show({ response, params }: HttpContextContract) {
     try {
       const productSubCategory = await ProductSubCategory.find(params.id);
       if (productSubCategory) {
@@ -37,7 +37,6 @@ export default class ProductSubCategoriesController {
   }
 
   public async update({
-    auth,
     request,
     response,
     params,
@@ -61,9 +60,8 @@ export default class ProductSubCategoriesController {
     });
   }
 
-  public async store({ auth, response, request }: HttpContextContract) {
+  public async store({ response, request }: HttpContextContract) {
     try {
-      const user = await auth.authenticate();
       const productCategoryId = request.input("product_category_id");
       const productCategory = await ProductCategory.findOrFail(productCategoryId);
       const productSubCategory = new ProductSubCategory();
@@ -86,9 +84,8 @@ export default class ProductSubCategoriesController {
     }
   }
 
-  public async destroy({ response, auth, params }: HttpContextContract) {
+  public async destroy({ response, params }: HttpContextContract) {
     try {
-      const user = await auth.authenticate();
       const productSubCategory = await ProductSubCategory.query()
         .where("id", params.id)
         .delete();

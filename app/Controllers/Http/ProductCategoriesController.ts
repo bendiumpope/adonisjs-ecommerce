@@ -4,7 +4,7 @@ import ProductSubCategory from "App/Models/ProductSubCategory";
 
 export default class ProductCategoriesController {
   public async index(
-    { request, response }: HttpContextContract
+    { response }: HttpContextContract
   ) {
     try {
       const productCategories = await ProductCategory.query();
@@ -17,7 +17,7 @@ export default class ProductCategoriesController {
     }
   }
 
-  public async show({ request, response, params }: HttpContextContract) {
+  public async show({ response, params }: HttpContextContract) {
     try {
       const productCategories = await ProductCategory.find(params.id);
       if (productCategories) {
@@ -35,7 +35,6 @@ export default class ProductCategoriesController {
   }
 
   public async update({
-    auth,
     request,
     response,
     params,
@@ -58,9 +57,8 @@ export default class ProductCategoriesController {
     });
   }
 
-  public async store({ auth, request, response }: HttpContextContract) {
+  public async store({ request, response }: HttpContextContract) {
     try {
-      const user = await auth.authenticate();
       const productCategory = new ProductCategory();
       productCategory.name = request.input("name");
       productCategory.status = request.input("status");
@@ -73,9 +71,8 @@ export default class ProductCategoriesController {
     }
   }
 
-  public async destroy({ response, auth, params }: HttpContextContract) {
+  public async destroy({ response, params }: HttpContextContract) {
     try {
-      const user = await auth.authenticate();
       const productCategory = await ProductCategory.query()
         .where("id", params.id)
         .delete();
