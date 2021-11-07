@@ -41,10 +41,13 @@ const databaseConfig: DatabaseConfig & { orm: Partial<OrmConfig> } = {
     */
     pg: {
       client: "pg",
+      migrations: {
+      disableRollbacksInProduction: true,
+    },
       connection: {
-        host: Env.get("PG_HOST", host) || host,
-        port: Env.get("PG_PORT", port) || port,
-        user: Env.get("PG_USER", user) || user,
+        host: Env.get("PG_HOST", host),
+        port: Env.get("PG_PORT", port),
+        user: Env.get("PG_USER", user),
         password: Env.get("PG_PASSWORD", password),
         database: Env.get("PG_DB_NAME", database),
       },
