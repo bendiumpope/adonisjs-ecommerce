@@ -9,3 +9,6 @@ exports.GetHerokuConnectionString = (dataBaseURL) => {
   const database = databaseUriVariables[2].split("/")[1];
   return [user, password, host, port, database];
 };
+
+// release: ENV_SILENT=true node ace migration:run --force
+// web: ENV_SILENT=true npm start
